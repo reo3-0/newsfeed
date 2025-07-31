@@ -90,7 +90,7 @@ def archive_results(article_list_of_lists):
             #print('D')
             pass
         else:
-            print('E')
+            #print('E')
             new_archive.to_csv('daily_news_archive.csv', index=False)
 
 def update_archive():
@@ -109,6 +109,7 @@ def update_archive():
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin"}
     for url, source_name in sources_dict.items():
+        print("Processing: " + url)
         archive_results(process_rss(url, source_name))
 
 update_archive()

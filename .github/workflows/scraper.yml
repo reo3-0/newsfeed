@@ -9,6 +9,9 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # Allows writing to the repository
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

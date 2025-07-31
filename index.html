@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Newsfeed</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #1e1e1e;
+      --secondary-color: #555;
+      --accent-color: #711ee5;
+      --background-color: #f9f9f9;
+      --card-background: #fff;
+      --text-color: #1e1e1e;
+      --transition-speed: 0.3s;
+      --border-radius: 16px;
+      --box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    body.dark {
+      --background-color: #121212;
+      --card-background: #1e1e1e;
+      --text-color: #f9f9f9;
+      --secondary-color: #ccc;
+      --accent-color: #711ee5;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background var(--transition-speed), color var(--transition-speed);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--accent-color);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      box-shadow: var(--box-shadow);
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    header .date {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .toggle-dark {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform var(--transition-speed);
+    }
+
+    .toggle-dark:hover {
+      transform: rotate(20deg);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+
+    .filter-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      background: var(--card-background);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .filter-panel select,
+    .filter-panel input[type="date"] {
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--secondary-color);
+      background: var(--background-color);
+      color: var(--text-color);
+      font-size: 0.95rem;
+    }
+
+    .reset-button {
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+    }
+
+    .reset-button:hover {
+      background-color: #5d14c9;
+    }
+
+    .loader {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--secondary-color);
+      margin: 2rem 0;
+    }
+
+    .featured-article {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .featured-thumbnail img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .featured-content {
+      padding: 1.2rem;
+    }
+
+    .featured-content h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .featured-content a {
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
+    .featured-content a:hover {
+      text-decoration: underline;
+    }
+
+    .publication-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .publication-item {
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease-in-out;
+      transition: transform var(--transition-speed);
+    }
+
+    .publication-item:hover {
+      transform: scale(1.03);
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .publication-details {
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .publication-headline a {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
+    .publication-headline a:hover {
+      color: var(--accent-color);
+    }
+
+    .publication-meta {
+      margin-top: auto;
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+
+    .load-more {
+      display: block;
+      margin: 1.5rem auto;
+      padding: 0.7rem 1.5rem;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+    }
+
+    .load-more:hover {
+      background-color: #5d14c9;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+      .featured-content h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>📰 News Feed</h1>
+    <div>
+      <span class="date" id="todayDate"></span>
+      <button class="toggle-dark" onclick="toggleDarkMode()">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="filter-panel">
+      <select id="sourceFilter" onchange="applyFilters()">
+        <option value="">All Sources</option>
+      </select>
+      <input type="date" id="startDate" onchange="applyFilters()" />
+      <button class="reset-button" onclick="resetFilters()">Reset Filters</button>
+    </div>
+
+    <div class="loader">Loading your morning news...</div>
+    <div id="featuredArticle"></div>
+    <ul id="publicationList" class="publication-list"></ul>
+    <button id="loadMoreBtn" class="load-more" onclick="loadMoreArticles()">Load More</button>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    let publications = [];
+    let displayedCount = 0;
+    const PAGE_SIZE = 30;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPublications();
+      document.getElementById('todayDate').innerText = new Date().toLocaleDateString(undefined, {
+        weekday: 'short', month: 'short', day: 'numeric'
+      });
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+      }
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    }
+
+    async function fetchThumbnail(url) {
+      const cacheKey = 'thumb_' + url;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) return cached;
+
+      try {
+        const resp = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+        const html = await resp.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const ogImage = doc.querySelector('meta[property="og:image"]')?.content;
+        const favicon = doc.querySelector('link[rel="icon"]')?.href;
+        const imageUrl = ogImage || favicon || 'placeholder.jpg';
+        localStorage.setItem(cacheKey, imageUrl);
+        return imageUrl;
+      } catch {
+        return 'placeholder.jpg';
+      }
+    }
+
+    async function renderPublications() {
+      const loader = document.querySelector('.loader');
+      loader.style.display = 'block';
+      try {
+        const resp = await fetch('daily_news_archive.csv');
+        if (!resp.ok) throw new Error('CSV not found');
+        const csvText = await resp.text();
+
+        const parsed = Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true
+        });
+        publications = parsed.data;
+
+        populateSourceFilter();
+        applyFilters();
+      } catch (err) {
+        console.error(err);
+        document.querySelector('main').innerHTML = `<p style="color:red;">Error loading news: ${err.message}</p>`;
+      } finally {
+        loader.style.display = 'none';
+      }
+    }
+
+    function populateSourceFilter() {
+      const sourceFilter = document.getElementById('sourceFilter');
+      const sources = [...new Set(publications.map(pub => pub['Source']).filter(Boolean))].sort();
+      sources.forEach(src => {
+        const option = document.createElement('option');
+        option.value = src;
+        option.textContent = src;
+        sourceFilter.appendChild(option);
+      });
+    }
+
+    function applyFilters() {
+      displayedCount = 0; // reset count when filters change
+      const source = document.getElementById('sourceFilter').value;
+      const startDate = new Date(document.getElementById('startDate').value);
+
+      let filtered = publications.filter(pub => {
+        const pubSource = pub['Source'] || '';
+        const pubDate = new Date(pub['Publication Date']);
+        const sourceMatch = !source || pubSource === source;
+        const dateMatch = isNaN(startDate) || pubDate >= startDate;
+        return sourceMatch && dateMatch;
+      });
+
+      filtered.sort((a, b) => new Date(b['Publication Datetime']) - new Date(a['Publication Datetime']));
+      displayArticles(filtered);
+    }
+
+    async function displayArticles(articles) {
+      const [first, ...rest] = articles;
+
+      // Featured Article
+      const thumbURL = await fetchThumbnail(first['URL']);
+      document.getElementById('featuredArticle').innerHTML = `
+        <div class="featured-article">
+          <div class="featured-thumbnail">
+            <a href="${first['URL']}" target="_blank" rel="noopener noreferrer">
+              <img src="${thumbURL}" alt="Thumbnail for ${first['Headline']}">
+            </a>
+          </div>
+          <div class="featured-content">
+            <h2><a href="${first['URL']}" target="_blank" rel="noopener noreferrer">${first['Headline']}</a></h2>
+            <p><strong>Date:</strong> ${first['Publication Date'] || 'Unknown'}<br/>
+            <strong>Source:</strong> ${first['Source'] || 'Unknown'}</p>
+          </div>
+        </div>
+      `;
+
+      const listEl = document.getElementById('publicationList');
+      listEl.innerHTML = '';
+      renderArticleBatch(rest);
+    }
+
+    async function renderArticleBatch(articles) {
+      const listEl = document.getElementById('publicationList');
+      const nextBatch = articles.slice(displayedCount, displayedCount + PAGE_SIZE);
+      for (const pub of nextBatch) {
+        const li = document.createElement('li');
+        li.className = 'publication-item';
+        li.innerHTML = `
+          <div class="thumbnail">
+            <a href="${pub['URL']}" target="_blank" rel="noopener noreferrer">
+              <img src="placeholder.jpg" alt="Loading..." data-url="${pub['URL']}">
+            </a>
+          </div>
+          <div class="publication-details">
+            <div class="publication-headline">
+              <a href="${pub['URL']}" target="_blank" rel="noopener noreferrer">${pub['Headline']}</a>
+            </div>
+            <div class="publication-meta">
+              ${pub['Publication Date']} | ${pub['Source']}
+            </div>
+          </div>
+        `;
+        listEl.appendChild(li);
+        lazyLoadSingle(li.querySelector('img'));
+      }
+      displayedCount += nextBatch.length;
+
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      loadMoreBtn.style.display = displayedCount < articles.length ? 'block' : 'none';
+    }
+
+    function lazyLoadSingle(img) {
+      const observer = new IntersectionObserver(async (entries, obs) => {
+        entries.forEach(async entry => {
+          if (entry.isIntersecting) {
+            const url = img.dataset.url;
+            img.src = await fetchThumbnail(url);
+            img.onerror = () => img.src = 'placeholder.jpg';
+            obs.unobserve(img);
+          }
+        });
+      }, { rootMargin: '50px' });
+      observer.observe(img);
+    }
+
+    function loadMoreArticles() {
+      const source = document.getElementById('sourceFilter').value;
+      const startDate = new Date(document.getElementById('startDate').value);
+
+      let filtered = publications.filter(pub => {
+        const pubSource = pub['Source'] || '';
+        const pubDate = new Date(pub['Publication Date']);
+        const sourceMatch = !source || pubSource === source;
+        const dateMatch = isNaN(startDate) || pubDate >= startDate;
+        return sourceMatch && dateMatch;
+      });
+
+      filtered.sort((a, b) => new Date(b['Publication Datetime']) - new Date(a['Publication Datetime']));
+      renderArticleBatch(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('sourceFilter').value = '';
+      document.getElementById('startDate').value = '';
+      applyFilters();
+    }
+  </script>
+</body>
+</html>

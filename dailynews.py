@@ -61,7 +61,6 @@ def get_pub_date(url):
     return None
 
 def archive_results(article_list_of_lists):
-    os.chdir('C:\\Users\\Ruairi\\Documents\\Coding Projects 2025\\Daily News')
     archive = pd.read_csv('daily_news_archive.csv')
 
     # Turn the list of lists into a dataframe with uniform column naming 

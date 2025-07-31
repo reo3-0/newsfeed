@@ -5,6 +5,7 @@ import json
 import feedparser
 from datetime import datetime
 import pytz
+from bs4 import BeautifulSoup
 
 def process_rss(source_url, source_name):
     # Tested with TNR

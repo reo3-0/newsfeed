@@ -65,6 +65,7 @@ def archive_results(article_list_of_lists):
 
     # Turn the list of lists into a dataframe with uniform column naming 
     df_these_articles = pd.DataFrame(article_list_of_lists).rename(columns={0: "Publication Datetime", 1: "Headline", 2: "URL", 3: "Source"}) 
+    print(df_these_articles)
     df_these_articles['Publication Datetime'] = pd.to_datetime(df_these_articles['Publication Datetime']) #, utc=True , format='%y%m%d'
     df_these_articles.sort_values(by=['Publication Datetime'], ascending=False, inplace=True)
     df_these_articles['Publication Date'] = df_these_articles['Publication Datetime'].dt.date

@@ -1,0 +1,34 @@
+name: Run Scraper Every 6 Hours
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours UTC
+  workflow_dispatch:        # allows manual trigger from GitHub UI
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run scraper
+        run: python your_script.py
+
+      - name: Commit updated CSV
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.csv
+          git commit -m "Update data.csv [auto]" || echo "No changes to commit"
+          git push

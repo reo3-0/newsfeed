@@ -105,7 +105,7 @@ def update_archive():
                     "https://www.thebignewsletter.com/feed": "BIG",
                     "https://www.sustainabilitybynumbers.com/feed":"Sustainability by numbers",
                     "https://www.kenklippenstein.com/feed":"Klippenstein",
-                    "http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
+                    #"http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin"}

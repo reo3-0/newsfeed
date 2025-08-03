@@ -99,7 +99,8 @@ def update_archive():
                     "https://www.thebignewsletter.com/feed": "BIG",
                     "https://www.sustainabilitybynumbers.com/feed":"Sustainability by numbers",
                     "https://www.kenklippenstein.com/feed":"Klippenstein",
-                    "http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
+                    #"http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
+                    # Error from Actions > Run Manual in GitHub:   KeyError: 'Publication Datetime'
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin",

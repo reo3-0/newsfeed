@@ -61,7 +61,6 @@ def get_pub_date(url):
     return None
 
 def archive_results(article_list_of_lists):
-    print(article_list_of_lists)
     archive = pd.read_csv('daily_news_archive.csv')
 
     # Turn the list of lists into a dataframe with uniform column naming 
@@ -69,12 +68,10 @@ def archive_results(article_list_of_lists):
     df_these_articles['Publication Datetime'] = pd.to_datetime(df_these_articles['Publication Datetime']) #, utc=True , format='%y%m%d'
     df_these_articles.sort_values(by=['Publication Datetime'], ascending=False, inplace=True)
     df_these_articles['Publication Date'] = df_these_articles['Publication Datetime'].dt.date
-    #print('A')
 
     # Suite to skip updating the archive if the newest URL is already in the archive. Trying to save computation, not sure if it's that helpful.
     first_row_of_new_scrape_exists_in_archive = ((archive == df_these_articles.iloc[0,]).all(axis=1)).any()
     if first_row_of_new_scrape_exists_in_archive:
-        #print('B')
         pass
     else:
         # A trick to update the archive with whichever rows has the most complete data. 
@@ -84,14 +81,11 @@ def archive_results(article_list_of_lists):
         new_archive.sort_values(by=['missing_count'], ascending = False, inplace=True)
         new_archive = new_archive.drop_duplicates('URL', keep = 'first').reset_index(drop=True)
         new_archive = new_archive.drop(['missing_count'], axis=1)
-        #print('C')
         # Suite to MAKE SURE that the updated archive is at least as big as the existing archive
         if len(new_archive) < len(archive):
             print('Failed to update archive: Something is going wrong. Updated archive should never be fewer rows than old archive.')
-            #print('D')
             pass
         else:
-            #print('E')
             new_archive.to_csv('daily_news_archive.csv', index=False)
 
 def update_archive():
@@ -108,9 +102,9 @@ def update_archive():
                     #"http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
-                    "https://jacobin.com/": "Jacobin"}
+                    "https://jacobin.com/": "Jacobin",
+                    "https://democracyatwork.substack.com/feed": "Democracy at Work"}
     for url, source_name in sources_dict.items():
-        print("Processing: " + url)
         archive_results(process_rss(url, source_name))
 
 update_archive()

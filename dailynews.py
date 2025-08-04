@@ -117,4 +117,5 @@ headers = {
 response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
 feed_content = response.content # Get the raw content of the feed
 print(feed_content)
+print(feedparser.parse(feed_content))
 print(len((feedparser.parse(feed_content))['entries'] ))

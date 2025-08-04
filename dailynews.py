@@ -111,10 +111,10 @@ def update_archive():
 
 update_archive()
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-}
-response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
+# headers = {
+#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+# }
+response = requests.get("https://democracyatwork.substack.com/feed") #, headers=headers)
 feed_content = response.content # Get the raw content of the feed
 print(feed_content)
 print(feedparser.parse(feed_content))

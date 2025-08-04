@@ -114,8 +114,7 @@ update_archive()
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
 }
-response = requests.get("https://democracyatwork.substack.com/feed", timeout=10, headers=headers) # Set a timeout for the reques
-print(response.raise_for_status())  # optional: will raise if feed is blocked or fails
-
+response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
 feed_content = response.content # Get the raw content of the feed
+print(feed_content)
 print(len((feedparser.parse(feed_content))['entries'] ))

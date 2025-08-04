@@ -111,6 +111,6 @@ def update_archive():
 
 update_archive()
 
-feed = feedparser.parse("https://democracyatwork.substack.com/feed")
-feed = feedparser.parse("https://jacobin.com/feed")
+print(feedparser.parse("https://democracyatwork.substack.com/feed"))
+print(feedparser.parse("https://jacobin.com/feed"))
 

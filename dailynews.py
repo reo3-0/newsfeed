@@ -103,7 +103,7 @@ def update_archive():
                     # Error from Actions > Run Manual in GitHub:   KeyError: 'Publication Datetime'
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
-                    "https://jacobin.com/": "Jacobin"
+                    "https://jacobin.com/": "Jacobin",
                     "https://democracyatwork.substack.com/feed": "Democracy at Work"
                    }
     for url, source_name in sources_dict.items():

@@ -111,6 +111,5 @@ def update_archive():
 
 update_archive()
 
-print(feedparser.parse("https://democracyatwork.substack.com/feed"))
-print(feedparser.parse("https://jacobin.com/feed"))
-
+print(len((feedparser.parse("https://democracyatwork.substack.com/feed"))['entries'] ))
+print(len((feedparser.parse("https://jacobin.com/feed"))['entries'] ))

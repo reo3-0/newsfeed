@@ -104,9 +104,14 @@ def update_archive():
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin"
-                    #"https://democracyatwork.substack.com/feed": "Democracy at Work"
+                    "https://democracyatwork.substack.com/feed": "Democracy at Work"
                    }
     for url, source_name in sources_dict.items():
-        archive_results(process_rss(url, source_name))
+        print(source_name)
+        this = process_rss(url, source_name)
+        print(this)
+        archive_results(this)
+        print()
+        #archive_results(process_rss(url, source_name))
 
 update_archive()

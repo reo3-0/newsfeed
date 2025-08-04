@@ -114,4 +114,3 @@ update_archive()
 response = requests.get("https://democracyatwork.substack.com/feed", timeout=10) # Set a timeout for the request
 feed_content = response.content # Get the raw content of the feed
 print(len((feedparser.parse(feed_content))['entries'] ))
-print(len((feedparser.parse("https://jacobin.com/feed"))['entries'] ))

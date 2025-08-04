@@ -18,9 +18,6 @@ def process_rss(source_url, source_name):
     feed = feedparser.parse(source_url_rss)
     list_of_articles_rows = []
     # Loop through articles
-    print(source_url_rss)
-    print(len(feed))
-    print(list_of_articles_rows)
     for entry in feed.entries:
         title = entry.title
         url = entry.link
@@ -106,15 +103,14 @@ def update_archive():
                     # Error from Actions > Run Manual in GitHub:   KeyError: 'Publication Datetime'
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
-                    "https://jacobin.com/": "Jacobin",
-                    "https://democracyatwork.substack.com/feed": "Democracy at Work"
+                    "https://jacobin.com/": "Jacobin"
+                    #"https://democracyatwork.substack.com/feed": "Democracy at Work"
                    }
     for url, source_name in sources_dict.items():
-        print(source_name)
-        this = process_rss(url, source_name)
-        print(this)
-        archive_results(this)
-        print()
-        #archive_results(process_rss(url, source_name))
+        archive_results(process_rss(url, source_name))
 
 update_archive()
+
+feed = feedparser.parse("https://democracyatwork.substack.com/feed")
+feed = feedparser.parse("https://jacobin.com/feed")
+

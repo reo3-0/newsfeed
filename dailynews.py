@@ -20,6 +20,7 @@ def process_rss(source_url, source_name):
     # Loop through articles
     print(source_url_rss)
     print(len(feed))
+    print(list_of_articles_rows)
     for entry in feed.entries:
         title = entry.title
         url = entry.link

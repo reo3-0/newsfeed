@@ -62,8 +62,8 @@ def get_pub_date(url):
 
 def archive_results(article_list_of_lists):
     if len(article_list_of_lists) == 0:
-    print("List of length 0 passed to archive_results()")
-    pass
+        print("List of length 0 passed to archive_results()")
+        pass
     
     archive = pd.read_csv('daily_news_archive.csv')
 

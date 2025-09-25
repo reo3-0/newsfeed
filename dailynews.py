@@ -110,10 +110,10 @@ def update_archive():
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin",
                     #"https://democracyatwork.substack.com/feed": "Democracy at Work",
-                    "https://www.wheresyoured.at/rss/", "Ed Zitron",
-                    "https://www.usermag.co/feed", "Taylor Lorenz",
-                    "https://zeteo.com/feed", "Zeteo
-                    #"https://www.thenation.com/feed/?post_type=article", "The Nation"
+                    "https://www.wheresyoured.at/rss/": "Ed Zitron",
+                    "https://www.usermag.co/feed": "Taylor Lorenz",
+                    "https://zeteo.com/feed": "Zeteo"
+                    "https://www.thenation.com/feed/?post_type=article": "The Nation"
                    }
     for url, source_name in sources_dict.items():
         archive_results(process_rss(url, source_name))

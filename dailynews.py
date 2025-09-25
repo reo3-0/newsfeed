@@ -112,7 +112,7 @@ def update_archive():
                     #"https://democracyatwork.substack.com/feed": "Democracy at Work",
                     "https://www.wheresyoured.at/rss/": "Ed Zitron",
                     "https://www.usermag.co/feed": "Taylor Lorenz",
-                    "https://zeteo.com/feed": "Zeteo"
+                    "https://zeteo.com/feed": "Zeteo",
                     "https://www.thenation.com/feed/?post_type=article": "The Nation"
                    }
     for url, source_name in sources_dict.items():

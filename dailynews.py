@@ -129,7 +129,7 @@ print("Take a look at this:")
 x = process_rss("https://democracyatwork.substack.com/feed", "Democracy at Work")
 print(x)
 
-feed_content = response.content # Get the raw content of the feed
-print(feed_content)
-print(feedparser.parse(feed_content))
-print(len((feedparser.parse(feed_content))['entries'] ))
+# feed_content = response.content # Get the raw content of the feed
+# print(feed_content)
+# print(feedparser.parse(feed_content))
+# print(len((feedparser.parse(feed_content))['entries'] ))

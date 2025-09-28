@@ -16,9 +16,21 @@ def process_rss(source_url, source_name):
     else:
         source_url_rss = source_url + '/feed'
         
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+    }
+
     print(f"Fetching RSS feed from: {source_url_rss}")
-    feed = feedparser.parse(source_url_rss)
-    print(f"Feed status: {feed.get('status', 'unknown')}")
+    response = requests.get(source_url_rss, headers=headers)
+
+    print(f"HTTP status code: {response.status_code}")
+
+    if response.status_code != 200:
+        print(f"Failed to fetch feed: {response.status_code}")
+        return []
+
+    feed = feedparser.parse(response.content)
     print(f"Bozo exception: {feed.get('bozo_exception', 'None')}")
     print(f"Number of entries: {len(feed.entries)}")
     
@@ -129,8 +141,8 @@ update_archive()
 # headers = {
 #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
 # }
-response = requests.get("https://democracyatwork.substack.com/feed") #, headers=headers)
 
+response = requests.get("https://democracyatwork.substack.com/feed") #, headers=headers)
 print("Take a look at this:")
 x = process_rss("https://democracyatwork.substack.com/feed", "Democracy at Work")
 print(x)

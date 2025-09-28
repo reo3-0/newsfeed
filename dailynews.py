@@ -15,7 +15,13 @@ def process_rss(source_url, source_name):
         source_url_rss = source_url
     else:
         source_url_rss = source_url + '/feed'
+        
+    print(f"Fetching RSS feed from: {source_url_rss}")
     feed = feedparser.parse(source_url_rss)
+    print(f"Feed status: {feed.get('status', 'unknown')}")
+    print(f"Bozo exception: {feed.get('bozo_exception', 'None')}")
+    print(f"Number of entries: {len(feed.entries)}")
+    
     list_of_articles_rows = []
     # Loop through articles
     for entry in feed.entries:

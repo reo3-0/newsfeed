@@ -16,23 +16,21 @@ def process_rss(source_url, source_name):
     else:
         source_url_rss = source_url + '/feed'
         
-
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
-
-    print(f"Fetching RSS feed from: {source_url_rss}")
+    # print(f"Fetching RSS feed from: {source_url_rss}")
     response = requests.get(source_url_rss, headers=headers)
 
-    print(f"HTTP status code: {response.status_code}")
+    # print(f"HTTP status code: {response.status_code}")
 
-    if response.status_code != 200:
-        print(f"Failed to fetch feed: {response.status_code}")
-        return []
+    # if response.status_code != 200:
+    #     print(f"Failed to fetch feed: {response.status_code}")
+    #     return []
 
     feed = feedparser.parse(response.content)
-    print(f"Bozo exception: {feed.get('bozo_exception', 'None')}")
-    print(f"Number of entries: {len(feed.entries)}")
+    # print(f"Bozo exception: {feed.get('bozo_exception', 'None')}")
+    # print(f"Number of entries: {len(feed.entries)}")
     
     list_of_articles_rows = []
     # Loop through articles
@@ -137,24 +135,17 @@ def update_archive():
 
 update_archive()
 
+# response = requests.get("https://democracyatwork.substack.com/feed") #, headers=headers)
+# print("Take a look at this:")
+# x = process_rss("https://democracyatwork.substack.com/feed", "Democracy at Work")
+# print(x)
+
 # headers = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
 # }
 
-response = requests.get("https://democracyatwork.substack.com/feed") #, headers=headers)
-print("Take a look at this:")
-x = process_rss("https://democracyatwork.substack.com/feed", "Democracy at Work")
-print(x)
+# print(f"Fetching RSS feed from: {source_url_rss}")
+# response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
+# response.status_code
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
-}
 
-print(f"Fetching RSS feed from: {source_url_rss}")
-response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
-response.status_code
-
-# feed_content = response.content # Get the raw content of the feed
-# print(feed_content)
-# print(feedparser.parse(feed_content))
-# print(len((feedparser.parse(feed_content))['entries'] ))

@@ -123,7 +123,6 @@ def update_archive():
                     "https://www.sustainabilitybynumbers.com/feed":"Sustainability by numbers",
                     "https://www.kenklippenstein.com/feed":"Klippenstein",
                     #"http://youngmenresearchinitiative.substack.com/feed":"Young Men Research Initiative",
-                    # Error from Actions > Run Manual in GitHub:   KeyError: 'Publication Datetime'
                     "https://www.gelliottmorris.com/feed":"G. Elliot Morris",
                     "https://www.propublica.org/feeds/propublica/main": "ProPublica",
                     "https://jacobin.com/": "Jacobin",
@@ -146,6 +145,14 @@ response = requests.get("https://democracyatwork.substack.com/feed") #, headers=
 print("Take a look at this:")
 x = process_rss("https://democracyatwork.substack.com/feed", "Democracy at Work")
 print(x)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+}
+
+print(f"Fetching RSS feed from: {source_url_rss}")
+response = requests.get("https://democracyatwork.substack.com/feed", headers=headers)
+response.status_code
 
 # feed_content = response.content # Get the raw content of the feed
 # print(feed_content)
